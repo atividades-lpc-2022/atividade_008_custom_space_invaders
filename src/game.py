@@ -21,7 +21,7 @@ class Game:
         self.screen = Screen(
             config.TITLE, Dimension(config.SCREEN_WIDTH, config.SCREEN_HEIGHT)
         )
-        self.tank = Tank(Coordinate(400, 740), (0, 0), self.config.IMAGE['tank'])
+        self.tank = Tank(Coordinate(400, 530), (0, 0), self.config.IMAGE['tank'])
         self.bricks: Sequence[Brick] = []
         self.bullets: Sequence[Bullet] = []
         self.hud = HUD(Coordinate(0, 0), Dimension(0, 0))

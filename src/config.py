@@ -5,7 +5,7 @@ class Config:
         "Custom Space Invaders - Gabriel Da Silva, Gabriel Dos Santos e Melinne Diniz"
     )
     SCREEN_WIDTH = 800  # TODO: Define screen size
-    SCREEN_HEIGHT = 800  # TODO: Define screen size
+    SCREEN_HEIGHT = 600  # TODO: Define screen size
 
 
     IMAGE = {
