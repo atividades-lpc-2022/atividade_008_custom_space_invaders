@@ -17,17 +17,18 @@ from modules.Bullet import Bullet
 
 class Game:
     def __init__(self, config: Config):
+        self.config = config
         self.screen = Screen(
             config.TITLE, Dimension(config.SCREEN_WIDTH, config.SCREEN_HEIGHT)
         )
-        self.tank = Tank(Coordinate(0, 0), Dimension(0, 0), 0.0, "path/to/sprite")
+        self.tank = Tank(Coordinate(400, 740), (0, 0), self.config.IMAGE['tank'])
         self.bricks: Sequence[Brick] = []
         self.bullets: Sequence[Bullet] = []
         self.hud = HUD(Coordinate(0, 0), Dimension(0, 0))
-        self.aim = Aim(Coordinate(0, 0), Dimension(0, 0), "path/to/sprite")
-        self.score = Score(0, "path/to/font", 32, Coordinate(0, 0))
-        self.life = Life(100, "path/to/font", 32, Coordinate(0, 0), 100)
-        self.config = config
+        self.aim = Aim(Coordinate(0, 0), Dimension(0, 0), self.config.IMAGE['aim'])
+        self.score = Score(0, None, 32, Coordinate(0, 0))
+        self.life = Life(100, None, 32, Coordinate(0, 0), 100)
+        
         self.is_running = True
 
     def input(self):
@@ -39,7 +40,7 @@ class Game:
         print("[Game] Processing...")
 
     def draw(self):
-        self.screen.draw()
+        self.screen.draw(self.config.IMAGE['bg'])
         self.tank.draw(self.screen)
         self.hud.draw(self.screen, [self.life, self.score])
         self.aim.draw(self.screen)

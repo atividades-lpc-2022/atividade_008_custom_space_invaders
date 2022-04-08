@@ -8,6 +8,5 @@ class Screen:
         self.surface = pygame.display.set_mode((dimension.width, dimension.height))
         pygame.display.set_caption(title)
 
-    def draw(self):
-        self.surface.fill(pygame.Color(0, 0, 0))
-        print("[Screen] Drawing...")
+    def draw(self, img):
+        self.surface.blit(img, (0, 0))
