@@ -11,6 +11,7 @@ from modules.HUD import HUD
 from modules.Life import Life
 from modules.Score import Score
 from modules.Screen import Screen
+from modules.Speed import Speed
 from modules.Tank import Tank
 from modules.Bullet import Bullet
 
@@ -21,7 +22,7 @@ class Game:
         self.screen = Screen(
             config.TITLE, Dimension(config.SCREEN_WIDTH, config.SCREEN_HEIGHT)
         )
-        self.tank = Tank(Coordinate(400, 530), (0, 0), self.config.IMAGE['tank'])
+        self.tank = Tank(Coordinate(400, 515), Dimension(59, 63), self.config.IMAGE['tank'])
         self.bricks: Sequence[Brick] = []
         self.bullets: Sequence[Bullet] = []
         self.hud = HUD(Coordinate(0, 0), Dimension(0, 0))
@@ -35,18 +36,29 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.is_running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                bullet = self.tank.fire(None, Speed(4, 4))
+                self.bullets.append(bullet)
+                print(f'{self.bullets}')
+                
 
     def process(self):
-        print("[Game] Processing...")
-
+        for b in self.bullets[:]:
+            b.update()
+            if b.coordinate[0] < 5 or b.coordinate[0] > self.screen.dimension.width \
+                or b.coordinate[1] < 5 or b.coordinate[1] > self.screen.dimension.height:
+                self.bullets.remove(b)
+            
+            
     def draw(self):
         self.screen.draw(self.config.IMAGE['bg'])
-        self.tank.draw(self.screen)
         self.hud.draw(self.screen, [self.life, self.score])
         self.aim.draw(self.screen)
 
         for bullet in self.bullets:
             bullet.draw(self.screen)
+
+        self.tank.draw(self.screen)
 
         for brick in self.bricks:
             brick.draw(self.screen)

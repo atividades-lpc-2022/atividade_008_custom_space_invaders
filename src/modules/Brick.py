@@ -24,4 +24,5 @@ class Brick(Element):
         self.damage = damage
 
     def draw(self, screen: Screen):
-        print("[Brick] Drawing..")
+        # print("[Brick] Drawing..")
+        pass

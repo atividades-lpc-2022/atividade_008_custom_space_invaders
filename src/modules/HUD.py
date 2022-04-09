@@ -11,9 +11,11 @@ class HUD(Element):
         super().__init__(coordinate, dimension)
 
     def __draw_hud_element__(self, element: HUDElement):
-        print("[HUD > HUD Element] Drawing...")
+        # print("[HUD > HUD Element] Drawing...")
+        pass
 
     def draw(self, screen: Screen, elements: Sequence[HUDElement]):
-        print("[HUD] Drawing...")
+        # print("[HUD] Drawing...")
+         
         for element in elements:
             self.__draw_hud_element__(element)

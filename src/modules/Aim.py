@@ -10,4 +10,5 @@ class Aim(Element):
         self.image = image_path
 
     def draw(self, screen: Screen):
-        print("[Aim] Drawing...")
+        # print("[Aim] Drawing...")
+        pass
