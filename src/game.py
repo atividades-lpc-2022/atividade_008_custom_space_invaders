@@ -37,8 +37,9 @@ class Game:
             if event.type == pygame.QUIT:
                 self.is_running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                bullet = self.tank.fire(None, Speed(4, 4))
-                self.bullets.append(bullet)
+                if len(self.bullets) < 4:
+                    bullet = self.tank.fire(None, Speed(4, 4))
+                    self.bullets.append(bullet)
                 print(f'{self.bullets}')
                 
 
