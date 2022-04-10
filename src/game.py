@@ -53,7 +53,7 @@ class Game:
         bomb_hits = random.randint(0, 3)
         if now - self.last_tick >= self.cooldown:
             self.last_tick = now
-            brick = Brick(Coordinate(random.randint(20,Config.SCREEN_WIDTH-20), 20), Dimension(16, 32), 1, Config.IMAGE[bombs[bomb_hits]], Speed(0,0.5), bomb_hits+1, 5)
+            brick = Brick(Coordinate(random.randint(20,Config.SCREEN_WIDTH-20), 20), Dimension(16, 32), Config.IMAGE[bombs[bomb_hits]], Speed(0,0.2+(0.02*self.score.value)), bomb_hits+1, (bomb_hits+1)*5)
             self.bricks.append(brick)
             
         for brick in self.bricks:
@@ -64,6 +64,8 @@ class Game:
                     brick.update_hits(-1)
                     if brick.hits <= 0:
                         self.bricks.remove(brick)
+                    else:
+                        brick.update_sprite(Config.IMAGE[bombs[brick.hits-1]])
 
         for brick in self.bricks:
             bottom_collision = brick.coordinate.y + brick.dimension.height == self.screen.dimension.height
@@ -85,12 +87,12 @@ class Game:
     def draw(self):
         self.screen.draw()
         self.hud.draw(self.screen, [self.score, self.life])
-        self.aim.draw(self.screen)
         for bullet in self.bullets:
             bullet.draw(self.screen)
         self.tank.draw(self.screen)
         for brick in self.bricks:
             brick.draw(self.screen)
+        self.aim.draw(self.screen)
 
     def loop(self):
         pygame.init()
