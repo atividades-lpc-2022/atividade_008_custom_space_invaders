@@ -25,7 +25,7 @@ class Game:
             self.config.IMAGE['bg']
         )
         self.tank = Tank(Coordinate(400, 515), Dimension(59, 63), self.config.IMAGE['tank'])
-        self.bricks: list[Brick] = [Brick(Coordinate(0,50), Dimension(10,10), 2, self.config.IMAGE["missile"], Speed(0.1, 1), 1, 20)]
+        self.bricks: list[Brick] = []
         self.bullets: list[Bullet] = []
         self.hud = HUD(Coordinate(0, 0), Dimension(self.config.SCREEN_WIDTH, 50))
         self.aim = Aim(Coordinate(0, 0), Dimension(0, 0), self.config.IMAGE['aim'])
