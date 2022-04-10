@@ -1,10 +1,12 @@
-import math, pygame
+import math
+import pygame
 
 from modules.Coordinate import Coordinate
 from modules.Dimension import Dimension
 from modules.Element import Element
 from modules.Screen import Screen
 from modules.Speed import Speed
+
 
 class Bullet(Element):
     def __init__(
@@ -29,5 +31,5 @@ class Bullet(Element):
         self.coordinate.y = self.coordinate.y + self.dir[1] * self.speed.y_speed
 
     def draw(self, screen: Screen):
-        self.rect = self.image.get_rect(center = (self.coordinate.x, self.coordinate.y))
+        self.rect = self.image.get_rect(center=(self.coordinate.x, self.coordinate.y))
         screen.surface.blit(self.image, self.rect)

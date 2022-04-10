@@ -1,5 +1,3 @@
-from distutils.command.config import config
-
 import pygame
 
 from config import Config
@@ -20,7 +18,7 @@ class Game:
     def __init__(self, config: Config):
         self.config = config
         self.screen = Screen(
-            config.TITLE, 
+            config.TITLE,
             Dimension(config.SCREEN_WIDTH, config.SCREEN_HEIGHT),
             self.config.IMAGE['bg']
         )
@@ -52,7 +50,8 @@ class Game:
                     self.score.update(self.config.POINTS)
                     self.bullets.remove(bullet)
                     brick.update_hits(-1)
-                    if(brick.hits <= 0): self.bricks.remove(brick)
+                    if brick.hits <= 0:
+                        self.bricks.remove(brick)
 
         for brick in self.bricks:
             bottom_collision = brick.coordinate.y + brick.dimension.height == self.screen.dimension.height
@@ -67,9 +66,9 @@ class Game:
         for bullet in self.bullets:
             bullet.update()
             if bullet.coordinate.x < 5 or bullet.coordinate.x > self.screen.dimension.width or \
-                bullet.coordinate.y < 5 or bullet.coordinate.y > self.screen.dimension.height:
+                    bullet.coordinate.y < 5 or bullet.coordinate.y > self.screen.dimension.height:
                 self.bullets.remove(bullet)
-            
+
     def draw(self):
         self.screen.draw()
         self.hud.draw(self.screen, [self.score, self.life])

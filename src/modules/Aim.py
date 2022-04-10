@@ -12,7 +12,7 @@ class Aim(Element):
 
     def draw(self, screen: Screen):
         pygame.mouse.set_visible(False)
-        x,y = pygame.mouse.get_pos()
+        x, y = pygame.mouse.get_pos()
         self.coordinate.x = x - self.dimension.width / 2
         self.coordinate.y = y - self.dimension.height / 2
         screen.surface.blit(

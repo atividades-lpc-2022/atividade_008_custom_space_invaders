@@ -1,10 +1,11 @@
-import pygame, math
+import math
+import pygame
 
+from modules.Bullet import Bullet
 from modules.Coordinate import Coordinate
 from modules.Dimension import Dimension
 from modules.Element import Element
 from modules.Screen import Screen
-from modules.Bullet import Bullet
 from modules.Speed import Speed
 
 
@@ -18,7 +19,7 @@ class Tank(Element):
         super().__init__(coordinate, dimension, image_path)
         self.initial_angle = 90
         self.image = pygame.image.load(image_path)
-        self.img_rect = self.image.get_rect(center = (coordinate.x, coordinate.y))
+        self.img_rect = self.image.get_rect(center=(coordinate.x, coordinate.y))
         self.initial_angle = 90
         self.dx = 0
         self.dy = 0
@@ -30,7 +31,7 @@ class Tank(Element):
         self.dy = y - self.img_rect.centery
         self.angle = math.degrees(math.atan2(-self.dy, self.dx)) - self.initial_angle
         rotated_img = pygame.transform.rotate(self.image, self.angle)
-        rotated_rect = rotated_img.get_rect(center = self.img_rect.center)
+        rotated_rect = rotated_img.get_rect(center=self.img_rect.center)
         
         return rotated_img, rotated_rect
 

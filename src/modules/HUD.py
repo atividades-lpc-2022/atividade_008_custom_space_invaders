@@ -12,7 +12,7 @@ class HUD:
         
     def __draw_hud_element__(self, screen: Screen, element: HUDElement):
         font = pygame.font.Font(element.font_path, element.font_size)
-        text = font.render(f'{element.title}: {element.value}', True, pygame.Color(255,255,255))
+        text = font.render(f'{element.title}: {element.value}', True, pygame.Color(255, 255, 255))
         text_rect = text.get_rect()
         text_rect.center = (element.coordinate.x, element.coordinate.y)
         screen.surface.blit(text, text_rect)
