@@ -12,6 +12,7 @@ from modules.Screen import Screen
 from modules.Speed import Speed
 from modules.Tank import Tank
 from modules.Bullet import Bullet
+from modules.Sound import Sound
 
 
 class Game:
@@ -30,6 +31,7 @@ class Game:
         self.life = Life(100, self.config.FONT_FAMILY, 32, Coordinate(self.config.SCREEN_WIDTH * 0.2, 30), 100)
         self.score = Score(0, self.config.FONT_FAMILY, 32, Coordinate(self.config.SCREEN_WIDTH * 0.8, 30))
         self.is_running = True
+        self.sound = Sound()
 
     def __stop__(self):
         self.is_running = False
@@ -38,8 +40,7 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.__stop__()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if len(self.bullets) < 4:
+            if event.type == pygame.MOUSEBUTTONDOWN and len(self.bullets) < 4:
                     bullet = self.tank.fire(Speed(6, 6), self.config.IMAGE['shot'])
                     self.bullets.append(bullet)
 

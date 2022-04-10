@@ -21,9 +21,10 @@ class Bullet(Element):
         super().__init__(coordinate, dimension, image_path)
         self.speed = speed
         self.angle = angle
+        self.image = pygame.image.load(image_path)
         self.euclidean = math.hypot(direct[0], direct[1])
         self.dir = (direct[0]/self.euclidean, direct[1]/self.euclidean)
-        self.image = pygame.transform.rotate(pygame.image.load(image_path), self.angle)
+        self.image = pygame.transform.rotate(self.image, self.angle)
         self.rect = self.image.get_rect()
 
     def update(self):

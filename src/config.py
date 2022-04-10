@@ -6,16 +6,21 @@ class Config:
     SCREEN_HEIGHT = 600  # TODO: Define screen size
     POINTS = 1
 
-    FONT_FAMILY = 'fonts/PressStart2P.ttf'
+    FONT_FAMILY = 'src/fonts/PressStart2P.ttf'
     
     COLORS = {
         "white": (255, 255, 255)
     }
 
     IMAGE = {
-        "tank": 'img/tank2.png',
-        "aim": 'img/sight2.png',
-        "bg": 'img/background.png',
-        "shot": 'img/shot2.png',
-        "missile": 'img/missile2.png'
+        "tank": 'src/img/tank2.png',
+        "aim": 'src/img/sight2.png',
+        "bg": 'src/img/background.png',
+        "shot": 'src/img/shot2.png',
+        "missile": 'src/img/missile2.png'
+    }
+
+    SOUND = {
+        'shot': '',
+        'collision': ''
     }
