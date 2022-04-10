@@ -20,7 +20,6 @@ class Tank(Element):
         self.initial_angle = 90
         self.image = pygame.image.load(image_path)
         self.img_rect = self.image.get_rect(center=(coordinate.x, coordinate.y))
-        self.initial_angle = 90
         self.dx = 0
         self.dy = 0
         self.angle = 0
