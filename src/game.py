@@ -34,7 +34,7 @@ class Game:
         self.is_running = True
         self.sound = Sound()
         self.last_tick = pygame.time.get_ticks()
-        self.cooldown = 1500
+        self.cooldown = 2000
 
     def __stop__(self):
         self.is_running = False
@@ -48,11 +48,12 @@ class Game:
                     self.bullets.append(bullet)
 
     def process(self):
-        
+        bombs=['bomb1','bomb2','bomb3','bomb4']
         now = pygame.time.get_ticks()
+        bomb_hits = random.randint(0, 3)
         if now - self.last_tick >= self.cooldown:
             self.last_tick = now
-            brick = Brick(Coordinate(random.randint(20,Config.SCREEN_WIDTH-20), 20), Dimension(16, 32), 1, Config.IMAGE['missile'], Speed(0,2), 1, 1)
+            brick = Brick(Coordinate(random.randint(20,Config.SCREEN_WIDTH-20), 20), Dimension(16, 32), 1, Config.IMAGE[bombs[bomb_hits]], Speed(0,0.5), bomb_hits+1, 5)
             self.bricks.append(brick)
             
         for brick in self.bricks:

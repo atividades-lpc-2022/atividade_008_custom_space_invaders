@@ -17,7 +17,10 @@ class Config:
         "aim": 'src/img/sight2.png',
         "bg": 'src/img/background.png',
         "shot": 'src/img/shot2.png',
-        "missile": 'src/img/missile2.png'
+        "bomb1": 'src/img/bomb1.png',
+        "bomb2": 'src/img/bomb2.png',
+        "bomb3": 'src/img/bomb3.png',
+        "bomb4": 'src/img/bomb4.png'
     }
 
     SOUND = {
