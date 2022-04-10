@@ -11,22 +11,25 @@ class Brick(Element):
         self,
         coordinate: Coordinate,
         dimension: Dimension,
-        level: int,
         image_path: str,
         speed: Speed,
         hits: int,
         damage: int,
     ):
         super().__init__(coordinate, dimension, image_path)
-        self.level = level
         self.image = pygame.image.load(image_path)
         self.rect = self.image.get_rect()
         self.speed = speed
         self.hits = hits
         self.damage = damage
-    
+        
+        
     def update_hits(self, hits: int = 1):
         self.hits += hits
+        
+    def update_sprite(self, image_path):
+        self.image = pygame.image.load(image_path)
+        
 
     def draw(self, screen: Screen):
         self.coordinate.y += self.speed.y_speed
