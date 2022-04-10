@@ -24,12 +24,11 @@ class Brick(Element):
         self.speed = speed
         self.hits = hits
         self.damage = damage
-
+    
     def update_hits(self, hits: int = 1):
         self.hits += hits
 
     def draw(self, screen: Screen):
-        self.coordinate.x = 50
         self.coordinate.y += self.speed.y_speed
         self.rect = self.image.get_rect(center=(self.coordinate.x, self.coordinate.y))
         screen.surface.blit(self.image, self.rect)

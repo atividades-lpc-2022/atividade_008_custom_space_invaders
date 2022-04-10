@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from config import Config
 from modules.Aim import Aim
@@ -32,6 +33,8 @@ class Game:
         self.score = Score(0, self.config.FONT_FAMILY, 32, Coordinate(self.config.SCREEN_WIDTH * 0.8, 30))
         self.is_running = True
         self.sound = Sound()
+        self.last_tick = pygame.time.get_ticks()
+        self.cooldown = 1500
 
     def __stop__(self):
         self.is_running = False
@@ -45,6 +48,13 @@ class Game:
                     self.bullets.append(bullet)
 
     def process(self):
+        
+        now = pygame.time.get_ticks()
+        if now - self.last_tick >= self.cooldown:
+            self.last_tick = now
+            brick = Brick(Coordinate(random.randint(20,Config.SCREEN_WIDTH-20), 20), Dimension(16, 32), 1, Config.IMAGE['missile'], Speed(0,2), 1, 1)
+            self.bricks.append(brick)
+            
         for brick in self.bricks:
             for bullet in self.bullets:
                 if bullet.collide(brick):
@@ -69,6 +79,7 @@ class Game:
             if bullet.coordinate.x < 5 or bullet.coordinate.x > self.screen.dimension.width or \
                     bullet.coordinate.y < 5 or bullet.coordinate.y > self.screen.dimension.height:
                 self.bullets.remove(bullet)
+        
 
     def draw(self):
         self.screen.draw()
