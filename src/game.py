@@ -87,12 +87,12 @@ class Game:
     def draw(self):
         self.screen.draw()
         self.hud.draw(self.screen, [self.score, self.life])
-        self.aim.draw(self.screen)
         for bullet in self.bullets:
             bullet.draw(self.screen)
         self.tank.draw(self.screen)
         for brick in self.bricks:
             brick.draw(self.screen)
+        self.aim.draw(self.screen)
 
     def loop(self):
         pygame.init()

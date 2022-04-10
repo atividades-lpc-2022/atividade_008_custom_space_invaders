@@ -9,6 +9,7 @@ class Aim(Element):
     def __init__(self, coordinate: Coordinate, dimension: Dimension, image_path: str):
         super().__init__(coordinate, dimension, image_path)
         self.image = pygame.image.load(image_path)
+        self.dimension = Dimension(self.image.get_width(), self.image.get_height())
 
     def draw(self, screen: Screen):
         pygame.mouse.set_visible(False)
