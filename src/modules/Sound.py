@@ -12,7 +12,7 @@ class Sound:
         name = pygame.mixer.Channel(num)
         return name
 
-    def play(self, channel: int, sound: str):
+    def play(self, channel: int, sound: str, vol: float):
         self.current_sound = pygame.mixer.Sound(sound)
-        self.channel(channel).set_volume(0.5)
+        self.channel(channel).set_volume(vol)
         self.channel(channel).play(self.current_sound)

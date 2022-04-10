@@ -29,4 +29,10 @@ class Config:
         "explosion8": "src/img/explosion8.png",
     }
 
-    SOUND = {"shot": "", "collision": ""}
+    SOUND = {
+        "hit": "src/sound/hit.ogg", 
+        "explosion_air": "src/sound/explode_air.ogg",
+        "explosion": "src/sound/explode_floor.ogg",
+        "shot": "src/sound/shot.ogg", 
+        "game_over": "src/sound/GameOver.ogg"
+        }

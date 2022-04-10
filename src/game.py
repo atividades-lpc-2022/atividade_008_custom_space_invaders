@@ -63,6 +63,7 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN and len(self.bullets) < 4:
                 bullet = self.tank.fire(Speed(6, 6), self.config.IMAGE["shot"])
                 self.bullets.append(bullet)
+                self.sound.play(0, self.config.SOUND['shot'], 1.0)
 
     def process(self):
         bombs = ["bomb1", "bomb2", "bomb3", "bomb4"]
@@ -92,7 +93,10 @@ class Game:
                     self.score.update(self.config.POINTS)
                     self.bullets.remove(bullet)
                     brick.update_hits(-1)
+                    if brick.hits > 0:
+                        self.sound.play(1, self.config.SOUND['hit'], 0.4)
                     if brick.hits <= 0:
+                        self.sound.play(2, self.config.SOUND['explosion_air'], 0.4)
                         explosion = brick.explode(self.config.IMAGE["explosion1"])
                         self.explosions.append(explosion)
                         self.bricks.remove(brick)
@@ -109,6 +113,7 @@ class Game:
                 self.explosions.append(explosion)
                 self.life.update(-brick.damage)
                 self.bricks.remove(brick)
+                self.sound.play(3, self.config.SOUND['explosion'], 0.4)
 
         if self.life.value <= 0:
             # TODO: Game over scene
