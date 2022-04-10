@@ -1,3 +1,4 @@
+from distutils.command.config import config
 import pygame
 import random
 
@@ -6,6 +7,7 @@ from modules.Aim import Aim
 from modules.Brick import Brick
 from modules.Coordinate import Coordinate
 from modules.Dimension import Dimension
+from modules.Explosion import Explosion
 from modules.HUD import HUD
 from modules.Life import Life
 from modules.Score import Score
@@ -27,6 +29,7 @@ class Game:
         self.tank = Tank(Coordinate(400, 515), Dimension(59, 63), self.config.IMAGE['tank'])
         self.bricks: list[Brick] = []
         self.bullets: list[Bullet] = []
+        self.explosions: list[Explosion] = []
         self.hud = HUD(Coordinate(0, 0), Dimension(self.config.SCREEN_WIDTH, 50))
         self.aim = Aim(Coordinate(0, 0), Dimension(0, 0), self.config.IMAGE['aim'])
         self.life = Life(100, self.config.FONT_FAMILY, 32, Coordinate(self.config.SCREEN_WIDTH * 0.2, 30), 100)
@@ -51,11 +54,16 @@ class Game:
         bombs=['bomb1','bomb2','bomb3','bomb4']
         now = pygame.time.get_ticks()
         bomb_hits = random.randint(0, 3)
+
         if now - self.last_tick >= self.cooldown:
             self.last_tick = now
             brick = Brick(Coordinate(random.randint(20,Config.SCREEN_WIDTH-20), 20), Dimension(16, 32), 1, Config.IMAGE[bombs[bomb_hits]], Speed(0,0.5), bomb_hits+1, (bomb_hits+1)*5)
             self.bricks.append(brick)
-            
+        
+        for explosion in self.explosions:
+            if explosion.frame == 8:
+                self.explosions.remove(explosion)
+
         for brick in self.bricks:
             for bullet in self.bullets:
                 if bullet.collide(brick):
@@ -64,6 +72,12 @@ class Game:
                     brick.update_hits(-1)
                     if brick.hits <= 0:
                         self.bricks.remove(brick)
+                        self.explosions.append(Explosion(
+                            Coordinate(brick.coordinate.x, brick.coordinate.y), 
+                            Dimension(10,10), 
+                            self.config.IMAGE["explosion1"], 
+                            45)
+                        )
 
         for brick in self.bricks:
             bottom_collision = brick.coordinate.y + brick.dimension.height == self.screen.dimension.height
@@ -87,9 +101,11 @@ class Game:
         self.hud.draw(self.screen, [self.score, self.life])
         for bullet in self.bullets:
             bullet.draw(self.screen)
-        self.tank.draw(self.screen)
         for brick in self.bricks:
             brick.draw(self.screen)
+        for explosion in self.explosions:
+            explosion.draw(self.screen)
+        self.tank.draw(self.screen)
         self.aim.draw(self.screen)
 
     def loop(self):

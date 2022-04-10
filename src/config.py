@@ -20,7 +20,15 @@ class Config:
         "bomb1": 'src/img/bomb1.png',
         "bomb2": 'src/img/bomb2.png',
         "bomb3": 'src/img/bomb3.png',
-        "bomb4": 'src/img/bomb4.png'
+        "bomb4": 'src/img/bomb4.png',
+        "explosion1": 'src/img/explosion1.png',
+        "explosion2": 'src/img/explosion2.png',
+        "explosion3": 'src/img/explosion3.png',
+        "explosion4": 'src/img/explosion4.png',
+        "explosion5": 'src/img/explosion5.png',
+        "explosion6": 'src/img/explosion6.png',
+        "explosion7": 'src/img/explosion7.png',
+        "explosion8": 'src/img/explosion8.png',
     }
 
     SOUND = {
