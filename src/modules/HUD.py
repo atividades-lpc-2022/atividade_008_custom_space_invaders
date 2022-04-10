@@ -1,21 +1,22 @@
-from typing import Sequence
+import pygame
 from modules.Coordinate import Coordinate
 from modules.Dimension import Dimension
-from modules.Element import Element
 from modules.HUDElement import HUDElement
 from modules.Screen import Screen
 
 
-class HUD(Element):
+class HUD:
     def __init__(self, coordinate: Coordinate, dimension: Dimension):
-        super().__init__(coordinate, dimension)
+        self.coordinate = coordinate
+        self.dimension = dimension
+        
+    def __draw_hud_element__(self, screen: Screen, element: HUDElement):
+        font = pygame.font.Font(element.font_path, element.font_size)
+        text = font.render(f'{element.title}: {element.value}', True, pygame.Color(255,255,255))
+        text_rect = text.get_rect()
+        text_rect.center = (element.coordinate.x, element.coordinate.y)
+        screen.surface.blit(text, text_rect)
 
-    def __draw_hud_element__(self, element: HUDElement):
-        # print("[HUD > HUD Element] Drawing...")
-        pass
-
-    def draw(self, screen: Screen, elements: Sequence[HUDElement]):
-        # print("[HUD] Drawing...")
-         
+    def draw(self, screen: Screen, elements: list[HUDElement]):
         for element in elements:
-            self.__draw_hud_element__(element)
+            self.__draw_hud_element__(screen, element)

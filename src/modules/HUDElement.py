@@ -3,13 +3,20 @@ from modules.Dimension import Dimension
 from modules.Element import Element
 
 
-class HUDElement(Element):
+class HUDElement:
     def __init__(
-        self, value: int, font_path: str, font_size: int, coordinate: Coordinate
+        self, 
+        title: str,
+        value: int, 
+        font_path: str, 
+        font_size: int, 
+        coordinate: Coordinate
     ):
-        super().__init__(
-            coordinate, Dimension(coordinate.x + font_size, coordinate.y + font_size)
-        )
+        self.coordinate = coordinate
         self.value = value
-        self.font = font_path
+        self.font_path = font_path
         self.font_size = font_size
+        self.title = title
+    
+    def update(self, value: int = 1):
+        self.value += value

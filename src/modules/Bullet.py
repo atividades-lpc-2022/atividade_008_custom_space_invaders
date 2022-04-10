@@ -5,27 +5,29 @@ from modules.Dimension import Dimension
 from modules.Element import Element
 from modules.Screen import Screen
 from modules.Speed import Speed
-from config import Config as cf
-
 
 class Bullet(Element):
     def __init__(
-        self, coordinate: Coordinate, dimension: Dimension, speed: Speed, angle: float, direct: tuple
+        self, 
+        coordinate: Coordinate, 
+        dimension: Dimension, 
+        speed: Speed, 
+        angle: float, 
+        direct: tuple,
+        image_path: str
     ):
-        super().__init__(coordinate, dimension)
-        self.coordinate = (coordinate.x, coordinate.y)
-        self.speed = speed.get_speed()
+        super().__init__(coordinate, dimension, image_path)
+        self.speed = speed
         self.angle = angle
         self.euclidean = math.hypot(direct[0], direct[1])
         self.dir = (direct[0]/self.euclidean, direct[1]/self.euclidean)
-        self.image = pygame.transform.rotate(cf.IMAGE['shot'], self.angle)
-
+        self.image = pygame.transform.rotate(pygame.image.load(image_path), self.angle)
+        self.rect = self.image.get_rect()
 
     def update(self):
-        self.coordinate = (self.coordinate[0]+self.dir[0]*self.speed[0], \
-            self.coordinate[1]+self.dir[1]*self.speed[1])
-        # print(f'C: {self.coordinate[0]} + D: {self.dir[0]} * {self.speed[0]} = ')
+        self.coordinate.x = self.coordinate.x + self.dir[0] * self.speed.x_speed
+        self.coordinate.y = self.coordinate.y + self.dir[1] * self.speed.y_speed
 
     def draw(self, screen: Screen):
-        rect = self.image.get_rect(center = self.coordinate)
-        screen.surface.blit(self.image, rect)
+        self.rect = self.image.get_rect(center = (self.coordinate.x, self.coordinate.y))
+        screen.surface.blit(self.image, self.rect)

@@ -1,4 +1,4 @@
-from typing import Sequence
+from distutils.command.config import config
 
 import pygame
 
@@ -20,58 +20,72 @@ class Game:
     def __init__(self, config: Config):
         self.config = config
         self.screen = Screen(
-            config.TITLE, Dimension(config.SCREEN_WIDTH, config.SCREEN_HEIGHT)
+            config.TITLE, 
+            Dimension(config.SCREEN_WIDTH, config.SCREEN_HEIGHT),
+            self.config.IMAGE['bg']
         )
         self.tank = Tank(Coordinate(400, 515), Dimension(59, 63), self.config.IMAGE['tank'])
-        self.bricks: Sequence[Brick] = []
-        self.bullets: Sequence[Bullet] = []
-        self.hud = HUD(Coordinate(0, 0), Dimension(0, 0))
+        self.bricks: list[Brick] = [Brick(Coordinate(0,50), Dimension(10,10), 2, self.config.IMAGE["missile"], Speed(0.1, 1), 1, 20)]
+        self.bullets: list[Bullet] = []
+        self.hud = HUD(Coordinate(0, 0), Dimension(self.config.SCREEN_WIDTH, 50))
         self.aim = Aim(Coordinate(0, 0), Dimension(0, 0), self.config.IMAGE['aim'])
-        self.score = Score(0, None, 32, Coordinate(0, 0))
-        self.life = Life(100, None, 32, Coordinate(0, 0), 100)
-        
+        self.life = Life(100, self.config.FONT_FAMILY, 32, Coordinate(self.config.SCREEN_WIDTH * 0.2, 30), 100)
+        self.score = Score(0, self.config.FONT_FAMILY, 32, Coordinate(self.config.SCREEN_WIDTH * 0.8, 30))
         self.is_running = True
+
+    def __stop__(self):
+        self.is_running = False
 
     def input(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.is_running = False
+                self.__stop__()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if len(self.bullets) < 4:
-                    bullet = self.tank.fire(None, Speed(4, 4))
+                    bullet = self.tank.fire(Speed(6, 6), self.config.IMAGE['shot'])
                     self.bullets.append(bullet)
-                print(f'{self.bullets}')
-                
 
     def process(self):
-        for b in self.bullets[:]:
-            b.update()
-            if b.coordinate[0] < 5 or b.coordinate[0] > self.screen.dimension.width \
-                or b.coordinate[1] < 5 or b.coordinate[1] > self.screen.dimension.height:
-                self.bullets.remove(b)
-            
-            
-    def draw(self):
-        self.screen.draw(self.config.IMAGE['bg'])
-        self.hud.draw(self.screen, [self.life, self.score])
-        self.aim.draw(self.screen)
+        for brick in self.bricks:
+            for bullet in self.bullets:
+                if bullet.collide(brick):
+                    self.score.update(self.config.POINTS)
+                    self.bullets.remove(bullet)
+                    brick.update_hits(-1)
+                    if(brick.hits <= 0): self.bricks.remove(brick)
+
+        for brick in self.bricks:
+            bottom_collision = brick.coordinate.y + brick.dimension.height == self.screen.dimension.height
+            if bottom_collision:
+                self.life.update(-brick.damage)
+                self.bricks.remove(brick)
+
+        if self.life.value <= 0:
+            # TODO: Game over scene
+            self.__stop__()
 
         for bullet in self.bullets:
+            bullet.update()
+            if bullet.coordinate.x < 5 or bullet.coordinate.x > self.screen.dimension.width or \
+                bullet.coordinate.y < 5 or bullet.coordinate.y > self.screen.dimension.height:
+                self.bullets.remove(bullet)
+            
+    def draw(self):
+        self.screen.draw()
+        self.hud.draw(self.screen, [self.score, self.life])
+        self.aim.draw(self.screen)
+        for bullet in self.bullets:
             bullet.draw(self.screen)
-
         self.tank.draw(self.screen)
-
         for brick in self.bricks:
             brick.draw(self.screen)
 
     def loop(self):
         pygame.init()
         clock = pygame.time.Clock()
-
         while self.is_running:
             self.input()
             self.process()
             self.draw()
-
             pygame.display.update()
             clock.tick(60)

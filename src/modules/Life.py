@@ -11,7 +11,7 @@ class Life(HUDElement):
         coordinate: Coordinate,
         max_life: int,
     ):
-        super().__init__(value, font_path, font_size, coordinate)
+        super().__init__("HP", value, font_path, font_size, coordinate)
         self.max_life = max_life
 
     def reset(self):
