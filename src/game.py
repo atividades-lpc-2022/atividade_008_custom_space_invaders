@@ -53,7 +53,7 @@ class Game:
         bomb_hits = random.randint(0, 3)
         if now - self.last_tick >= self.cooldown:
             self.last_tick = now
-            brick = Brick(Coordinate(random.randint(20,Config.SCREEN_WIDTH-20), 20), Dimension(16, 32), 1, Config.IMAGE[bombs[bomb_hits]], Speed(0,0.5), bomb_hits+1, 5)
+            brick = Brick(Coordinate(random.randint(20,Config.SCREEN_WIDTH-20), 20), Dimension(16, 32), 1, Config.IMAGE[bombs[bomb_hits]], Speed(0,0.5), bomb_hits+1, (bomb_hits+1)*5)
             self.bricks.append(brick)
             
         for brick in self.bricks:
