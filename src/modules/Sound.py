@@ -16,4 +16,3 @@ class Sound:
         self.current_sound = pygame.mixer.Sound(sound)
         self.channel(channel).set_volume(0.5)
         self.channel(channel).play(self.current_sound)
-

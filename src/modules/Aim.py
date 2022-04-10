@@ -18,5 +18,5 @@ class Aim(Element):
         self.coordinate.y = y - self.dimension.height / 2
         screen.surface.blit(
             self.image,
-            (self.coordinate.x, self.coordinate.y),            
+            (self.coordinate.x, self.coordinate.y),
         )

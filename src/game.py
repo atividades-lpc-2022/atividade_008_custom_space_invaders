@@ -1,4 +1,3 @@
-from distutils.command.config import config
 import pygame
 import random
 
@@ -24,16 +23,29 @@ class Game:
         self.screen = Screen(
             config.TITLE,
             Dimension(config.SCREEN_WIDTH, config.SCREEN_HEIGHT),
-            self.config.IMAGE['bg']
+            self.config.IMAGE["bg"],
         )
-        self.tank = Tank(Coordinate(400, 515), Dimension(59, 63), self.config.IMAGE['tank'])
+        self.tank = Tank(
+            Coordinate(400, 515), Dimension(59, 63), self.config.IMAGE["tank"]
+        )
         self.bricks: list[Brick] = []
         self.bullets: list[Bullet] = []
         self.explosions: list[Explosion] = []
         self.hud = HUD(Coordinate(0, 0), Dimension(self.config.SCREEN_WIDTH, 50))
-        self.aim = Aim(Coordinate(0, 0), Dimension(0, 0), self.config.IMAGE['aim'])
-        self.life = Life(100, self.config.FONT_FAMILY, 32, Coordinate(self.config.SCREEN_WIDTH * 0.2, 30), 100)
-        self.score = Score(0, self.config.FONT_FAMILY, 32, Coordinate(self.config.SCREEN_WIDTH * 0.8, 30))
+        self.aim = Aim(Coordinate(0, 0), Dimension(0, 0), self.config.IMAGE["aim"])
+        self.life = Life(
+            100,
+            self.config.FONT_FAMILY,
+            32,
+            Coordinate(self.config.SCREEN_WIDTH * 0.2, 30),
+            100,
+        )
+        self.score = Score(
+            0,
+            self.config.FONT_FAMILY,
+            32,
+            Coordinate(self.config.SCREEN_WIDTH * 0.8, 30),
+        )
         self.is_running = True
         self.sound = Sound()
         self.last_tick = pygame.time.get_ticks()
@@ -47,19 +59,26 @@ class Game:
             if event.type == pygame.QUIT:
                 self.__stop__()
             if event.type == pygame.MOUSEBUTTONDOWN and len(self.bullets) < 4:
-                    bullet = self.tank.fire(Speed(6, 6), self.config.IMAGE['shot'])
-                    self.bullets.append(bullet)
+                bullet = self.tank.fire(Speed(6, 6), self.config.IMAGE["shot"])
+                self.bullets.append(bullet)
 
     def process(self):
-        bombs=['bomb1','bomb2','bomb3','bomb4']
+        bombs = ["bomb1", "bomb2", "bomb3", "bomb4"]
         now = pygame.time.get_ticks()
         bomb_hits = random.randint(0, 3)
 
         if now - self.last_tick >= self.cooldown:
             self.last_tick = now
-            brick = Brick(Coordinate(random.randint(20,Config.SCREEN_WIDTH-20), 20), Dimension(16, 32), 1, Config.IMAGE[bombs[bomb_hits]], Speed(0,0.5), bomb_hits+1, (bomb_hits+1)*5)
+            brick = Brick(
+                Coordinate(random.randint(20, Config.SCREEN_WIDTH - 20), 20),
+                Dimension(16, 32),
+                Config.IMAGE[bombs[bomb_hits]],
+                Speed(0, 0.2 + (0.02 * self.score.value)),
+                bomb_hits + 1,
+                (bomb_hits + 1) * 5,
+            )
             self.bricks.append(brick)
-        
+
         for explosion in self.explosions:
             if explosion.frame == 8:
                 self.explosions.remove(explosion)
@@ -71,17 +90,20 @@ class Game:
                     self.bullets.remove(bullet)
                     brick.update_hits(-1)
                     if brick.hits <= 0:
+                        explosion = brick.explode(self.config.IMAGE["explosion1"])
+                        self.explosions.append(explosion)
                         self.bricks.remove(brick)
-                        self.explosions.append(Explosion(
-                            Coordinate(brick.coordinate.x, brick.coordinate.y), 
-                            Dimension(10,10), 
-                            self.config.IMAGE["explosion1"], 
-                            45)
-                        )
+                    else:
+                        brick.update_sprite(Config.IMAGE[bombs[brick.hits - 1]])
 
         for brick in self.bricks:
-            bottom_collision = brick.coordinate.y + brick.dimension.height == self.screen.dimension.height
+            bottom_collision = (
+                brick.coordinate.y + brick.dimension.height
+                >= self.screen.dimension.height
+            )
             if bottom_collision:
+                explosion = brick.explode(self.config.IMAGE["explosion1"])
+                self.explosions.append(explosion)
                 self.life.update(-brick.damage)
                 self.bricks.remove(brick)
 
@@ -91,10 +113,13 @@ class Game:
 
         for bullet in self.bullets:
             bullet.update()
-            if bullet.coordinate.x < 5 or bullet.coordinate.x > self.screen.dimension.width or \
-                    bullet.coordinate.y < 5 or bullet.coordinate.y > self.screen.dimension.height:
+            if (
+                bullet.coordinate.x < 5
+                or bullet.coordinate.x > self.screen.dimension.width
+                or bullet.coordinate.y < 5
+                or bullet.coordinate.y > self.screen.dimension.height
+            ):
                 self.bullets.remove(bullet)
-        
 
     def draw(self):
         self.screen.draw()
