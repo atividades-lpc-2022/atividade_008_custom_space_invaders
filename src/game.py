@@ -18,6 +18,8 @@ from modules.Sound import Sound
 
 
 class Game:
+    pygame.display.set_icon(pygame.image.load('src\img\icon.png'))
+    
     def __init__(self, config: Config):
         self.config = config
         self.screen = Screen(
@@ -49,7 +51,7 @@ class Game:
         self.is_running = True
         self.sound = Sound()
         self.last_tick = pygame.time.get_ticks()
-        self.cooldown = 2000
+        self.cooldown = 3000
 
     def __stop__(self):
         self.is_running = False
@@ -70,13 +72,14 @@ class Game:
         if now - self.last_tick >= self.cooldown:
             self.last_tick = now
             brick = Brick(
-                Coordinate(random.randint(20, Config.SCREEN_WIDTH - 20), 20),
+                Coordinate(random.randint(20, Config.SCREEN_WIDTH - 20), 0),
                 Dimension(16, 32),
                 Config.IMAGE[bombs[bomb_hits]],
-                Speed(0, 0.2 + (0.02 * self.score.value)),
+                Speed(0, 0.2 + (0.01 * self.score.value)),
                 bomb_hits + 1,
                 (bomb_hits + 1) * 5,
             )
+            self.cooldown -= 10
             self.bricks.append(brick)
 
         for explosion in self.explosions:
