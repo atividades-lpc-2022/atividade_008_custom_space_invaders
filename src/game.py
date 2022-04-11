@@ -74,7 +74,7 @@ class Game:
         if now - self.last_tick >= self.cooldown:
             self.last_tick = now
             brick = Brick(
-                Coordinate(random.randint(20, Config.SCREEN_WIDTH - 20), 0),
+                Coordinate(random.randint(40, Config.SCREEN_WIDTH - 20), 0),
                 Dimension(16, 32),
                 Config.IMAGE[bombs[bomb_hits]],
                 Speed(0, 0.5 + (0.01 * self.score.value) - (0.1 * bomb_hits)),
