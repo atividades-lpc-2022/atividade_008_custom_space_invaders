@@ -6,7 +6,7 @@ mixer.init(frequency=44100, size=-16, channels=7, buffer=512)
 
 class Sound:
     def __init__(self):
-        self.current_sound = ''
+        self.current_sound = ""
 
     def __channel__(self, num: int):
         name = mixer.Channel(num)
@@ -20,5 +20,3 @@ class Sound:
     def music(self, music: str):
         mixer.music.load(music)
         mixer.music.play(-1)
-
-
