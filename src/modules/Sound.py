@@ -8,7 +8,7 @@ class Sound:
     def __init__(self):
         self.current_sound = ""
 
-    def __channel__(self, num: int):
+    def __channel__(self, num: int) -> mixer.Channel:
         name = mixer.Channel(num)
         return name
 

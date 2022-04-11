@@ -94,10 +94,11 @@ class Game:
                 self.scene = self.config.SCENE["game"]
                 self.screen.change_background(self.config.IMAGE["bg"])
                 self.sound.music(self.config.MUSIC["game"])
+                self.bullets =[]
             if (
                 self.scene == self.config.SCENE["game"]
                 and event.type == pygame.MOUSEBUTTONDOWN
-                and len(self.bullets) <= 4
+                and len(self.bullets) < 5
             ):
                 bullet = self.tank.fire(Speed(6, 6), self.config.IMAGE["shot"])
                 self.bullets.append(bullet)
