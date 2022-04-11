@@ -1,3 +1,4 @@
+from multiprocessing import Lock
 import pygame
 import random
 
@@ -70,6 +71,7 @@ class Game:
         self.sound = Sound()
         self.last_tick = pygame.time.get_ticks()
         self.cooldown = 3000
+        self.lock = True
 
     def __stop__(self):
         self.is_running = False
@@ -94,15 +96,17 @@ class Game:
                 self.scene = self.config.SCENE["game"]
                 self.screen.change_background(self.config.IMAGE["bg"])
                 self.sound.music(self.config.MUSIC["game"])
-                self.bullets =[]
             if (
                 self.scene == self.config.SCENE["game"]
                 and event.type == pygame.MOUSEBUTTONDOWN
-                and len(self.bullets) < 5
+                and len(self.bullets) <= 3
             ):
-                bullet = self.tank.fire(Speed(6, 6), self.config.IMAGE["shot"])
-                self.bullets.append(bullet)
-                self.sound.play(0, self.config.SOUND["shot"], 1.0)
+                if self.lock:
+                    self.lock = False
+                else:
+                    bullet = self.tank.fire(Speed(6, 6), self.config.IMAGE["shot"])
+                    self.bullets.append(bullet)
+                    self.sound.play(0, self.config.SOUND["shot"], 1.0)
             if (
                 self.scene == self.config.SCENE["gameover"]
                 and event.type == pygame.KEYDOWN

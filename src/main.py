@@ -1,4 +1,3 @@
-import pygame
 
 from src.game import Game
 
@@ -7,5 +6,5 @@ class Main:
     def __init__(self, game: Game):
         self.game = game
 
-    def init(self):
+    def run(self):
         self.game.loop()

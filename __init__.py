@@ -3,4 +3,4 @@ from src.game import Game
 from src.main import Main
 
 main = Main(Game(Config()))
-main.init()
+main.run()
