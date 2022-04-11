@@ -4,9 +4,15 @@ from src.modules.HUDElement import HUDElement
 
 class Score(HUDElement):
     def __init__(
-        self, value: int, font_path: str, font_size: int, coordinate: Coordinate
+        self,
+        title: str,
+        value: int,
+        font_path: str,
+        font_size: int,
+        coordinate: Coordinate,
+        color: tuple[int, int, int] = (255, 255, 255),
     ):
-        super().__init__("SCORE", value, font_path, font_size, coordinate)
+        super().__init__(title, value, font_path, font_size, coordinate, color)
 
     def reset(self):
         self.value = 0

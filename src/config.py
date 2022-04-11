@@ -2,9 +2,7 @@ import json
 
 
 class Config:
-    TITLE = (
-        "Imminent Doomsday - Gabriel Da Silva, Gabriel Dos Santos e Melinne Diniz"
-    )
+    TITLE = "Imminent Doomsday - Gabriel Da Silva, Gabriel Dos Santos e Melinne Diniz"
     SCREEN_WIDTH = 800  # TODO: Define screen size
     SCREEN_HEIGHT = 600  # TODO: Define screen size
     POINTS = 1
@@ -19,6 +17,7 @@ class Config:
         "tank": "src/img/tank2.png",
         "aim": "src/img/sight2.png",
         "bg": "src/img/background.png",
+        "gameover": "src/img/endgame.png",
         "shot": "src/img/shot2.png",
         "bomb1": "src/img/bomb1.png",
         "bomb2": "src/img/bomb2.png",
@@ -35,28 +34,30 @@ class Config:
     }
 
     SOUND = {
-        "hit": "src/sound/hit.ogg", 
+        "hit": "src/sound/hit.ogg",
         "explosion_air": "src/sound/explode_air.ogg",
         "explosion": "src/sound/explode_floor.ogg",
-        "shot": "src/sound/shot.ogg", 
+        "shot": "src/sound/shot.ogg",
         "music_loop": "src/sound/pika-a-boo_8bit.mp3",
-        "game_over": "src/sound/GameOver.ogg"
+        "game_over": "src/sound/GameOver.ogg",
     }
 
+    SCENE = {"home": 1, "game": 2, "gameover": 3}
+
     def __get_local_data__(self) -> dict:
-        with open(self.LOCAL_DATA_PATH, 'r') as local_data_file:
+        with open(self.LOCAL_DATA_PATH, "r") as local_data_file:
             local_data = json.load(local_data_file)
         return local_data
 
     def get_high_score(self) -> int:
         local_data = self.__get_local_data__()
-        return local_data['high_score']
+        return local_data["high_score"]
 
     def set_high_score(self, new_high_score: int):
         local_data = self.__get_local_data__()
-        local_data['high_score'] = new_high_score
-        
-        new_local_data = json.dumps(local_data, indent = 4)
-        
-        with open(self.LOCAL_DATA_PATH, 'w') as local_data_file:
+        local_data["high_score"] = new_high_score
+
+        new_local_data = json.dumps(local_data, indent=4)
+
+        with open(self.LOCAL_DATA_PATH, "w") as local_data_file:
             local_data_file.write(new_local_data)
