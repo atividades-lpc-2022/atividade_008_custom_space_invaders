@@ -1,5 +1,5 @@
-from config import Config
-from game import Game
+from src.config import Config
+from src.game import Game
 
 
 class Main:
@@ -8,7 +8,3 @@ class Main:
 
     def init(self):
         self.game.loop()
-
-
-main = Main(Game(Config()))
-main.init()

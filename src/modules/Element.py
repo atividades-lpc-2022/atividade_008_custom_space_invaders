@@ -1,7 +1,7 @@
 import pygame
 
-from modules.Coordinate import Coordinate
-from modules.Dimension import Dimension
+from src.modules.Coordinate import Coordinate
+from src.modules.Dimension import Dimension
 
 
 class Element(pygame.sprite.Sprite):

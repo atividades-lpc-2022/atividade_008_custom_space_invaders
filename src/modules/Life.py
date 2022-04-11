@@ -1,5 +1,5 @@
-from modules.Coordinate import Coordinate
-from modules.HUDElement import HUDElement
+from src.modules.Coordinate import Coordinate
+from src.modules.HUDElement import HUDElement
 
 
 class Life(HUDElement):

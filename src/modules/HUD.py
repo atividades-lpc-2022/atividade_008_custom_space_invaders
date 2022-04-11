@@ -1,8 +1,8 @@
 import pygame
-from modules.Coordinate import Coordinate
-from modules.Dimension import Dimension
-from modules.HUDElement import HUDElement
-from modules.Screen import Screen
+from src.modules.Coordinate import Coordinate
+from src.modules.Dimension import Dimension
+from src.modules.HUDElement import HUDElement
+from src.modules.Screen import Screen
 
 
 class HUD:

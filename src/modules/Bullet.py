@@ -1,11 +1,11 @@
 import math
 import pygame
 
-from modules.Coordinate import Coordinate
-from modules.Dimension import Dimension
-from modules.Element import Element
-from modules.Screen import Screen
-from modules.Speed import Speed
+from src.modules.Coordinate import Coordinate
+from src.modules.Dimension import Dimension
+from src.modules.Element import Element
+from src.modules.Screen import Screen
+from src.modules.Speed import Speed
 
 
 class Bullet(Element):

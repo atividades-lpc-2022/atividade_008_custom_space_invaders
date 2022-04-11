@@ -1,5 +1,5 @@
 import pygame
-from modules.Dimension import Dimension
+from src.modules.Dimension import Dimension
 
 
 class Screen:

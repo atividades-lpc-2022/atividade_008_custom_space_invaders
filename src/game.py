@@ -1,20 +1,20 @@
 import pygame
 import random
 
-from config import Config
-from modules.Aim import Aim
-from modules.Brick import Brick
-from modules.Coordinate import Coordinate
-from modules.Dimension import Dimension
-from modules.Explosion import Explosion
-from modules.HUD import HUD
-from modules.Life import Life
-from modules.Score import Score
-from modules.Screen import Screen
-from modules.Speed import Speed
-from modules.Tank import Tank
-from modules.Bullet import Bullet
-from modules.Sound import Sound
+from src.config import Config
+from src.modules.Aim import Aim
+from src.modules.Brick import Brick
+from src.modules.Coordinate import Coordinate
+from src.modules.Dimension import Dimension
+from src.modules.Explosion import Explosion
+from src.modules.HUD import HUD
+from src.modules.Life import Life
+from src.modules.Score import Score
+from src.modules.Screen import Screen
+from src.modules.Speed import Speed
+from src.modules.Tank import Tank
+from src.modules.Bullet import Bullet
+from src.modules.Sound import Sound
 
 
 class Game:

@@ -1,6 +1,6 @@
-from modules.Coordinate import Coordinate
-from modules.Dimension import Dimension
-from modules.Element import Element
+from src.modules.Coordinate import Coordinate
+from src.modules.Dimension import Dimension
+from src.modules.Element import Element
 
 
 class HUDElement:
