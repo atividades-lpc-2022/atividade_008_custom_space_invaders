@@ -2,7 +2,7 @@ import json
 
 
 class Config:
-    TITLE = "Imminent Doomsday - Gabriel Da Silva, Gabriel Dos Santos e Melinne Diniz"
+    TITLE = "Imminent Doomsday"
     SCREEN_WIDTH = 800  # TODO: Define screen size
     SCREEN_HEIGHT = 600  # TODO: Define screen size
     POINTS = 1
@@ -43,15 +43,11 @@ class Config:
         "game_over": "src/sound/GameOver.ogg",
     }
 
-    SCENE = {
-        "home": 1, 
-        "game": 2, 
-        "gameover": 3
-    } 
+    SCENE = {"home": 1, "game": 2, "gameover": 3}
 
     MUSIC = {
         "game": "src/sound/wargames_defcon_track5.ogg",
-        "home": "src/sound/rabbia_e_tarantella.ogg"
+        "home": "src/sound/rabbia_e_tarantella.ogg",
     }
 
     def __get_local_data__(self) -> dict:

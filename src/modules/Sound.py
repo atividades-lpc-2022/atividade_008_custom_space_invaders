@@ -16,10 +16,10 @@ class Sound:
         self.current_sound = mixer.Sound(sound)
         self.__channel__(channel).set_volume(vol)
         self.__channel__(channel).play(self.current_sound)
-    
+
     def music(self, music: str):
         mixer.music.load(music)
         mixer.music.play(-1)
-    
+
     def stop_music(self):
         mixer.music.stop()

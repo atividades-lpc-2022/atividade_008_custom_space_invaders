@@ -1,4 +1,3 @@
-from multiprocessing import Lock
 import pygame
 import random
 
@@ -16,7 +15,6 @@ from src.modules.Speed import Speed
 from src.modules.Tank import Tank
 from src.modules.Bullet import Bullet
 from src.modules.Sound import Sound
-
 
 
 class Game:
@@ -64,7 +62,7 @@ class Game:
             self.config.FONT_FAMILY,
             32,
             Coordinate(self.config.SCREEN_WIDTH * 0.5, self.config.SCREEN_HEIGHT * 0.6),
-            (217, 212, 82)
+            (217, 212, 82),
         )
         self.scene = self.config.SCENE["home"]
         self.is_running = True
@@ -121,6 +119,7 @@ class Game:
             self.sound.stop_music()
             if self.config.get_high_score() < self.score.value:
                 self.config.set_high_score(self.score.value)
+                self.high_score.value = self.score.value
             self.screen.change_background(self.config.IMAGE["gameover"])
             self.hud = HUD()
             self.final_score.value = self.score.value
@@ -187,12 +186,10 @@ class Game:
                     self.bullets.remove(bullet)
 
     def draw(self):
-        if self.scene == self.config.SCENE['home']:
+        if self.scene == self.config.SCENE["home"]:
             self.screen.draw()
             font_b = pygame.font.Font(self.config.FONT_FAMILY, 20)
-            button = font_b.render(
-            'START', True, pygame.Color(0, 0, 0)
-            )
+            button = font_b.render("START", True, pygame.Color(0, 0, 0))
             button_rect = button.get_rect()
             button_rect.center = (687, 152)
             self.screen.surface.blit(button, button_rect)

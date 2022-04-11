@@ -8,4 +8,3 @@ class Speed:
 
     def invert_y(self):
         self.y_speed *= -1
-
