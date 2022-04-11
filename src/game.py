@@ -77,7 +77,7 @@ class Game:
                 Coordinate(random.randint(20, Config.SCREEN_WIDTH - 20), 0),
                 Dimension(16, 32),
                 Config.IMAGE[bombs[bomb_hits]],
-                Speed(0, 0.2 + (0.01 * self.score.value)),
+                Speed(0, 0.5 + (0.01 * self.score.value) - (0.1 * bomb_hits)),
                 bomb_hits + 1,
                 (bomb_hits + 1) * 5,
             )
