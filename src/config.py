@@ -39,8 +39,11 @@ class Config:
         "explosion_air": "src/sound/explode_air.ogg",
         "explosion": "src/sound/explode_floor.ogg",
         "shot": "src/sound/shot.ogg", 
-        "music_loop": "src/sound/pika-a-boo_8bit.mp3",
         "game_over": "src/sound/GameOver.ogg"
+    }
+
+    MUSIC = {
+        "music_loop": "src/sound/wargames_defcon_track5.ogg",
     }
 
     def __get_local_data__(self) -> dict:

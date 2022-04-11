@@ -17,8 +17,8 @@ from src.modules.Bullet import Bullet
 from src.modules.Sound import Sound
 
 
+
 class Game:
-    
     
     def __init__(self, config: Config):
         self.config = config
@@ -66,7 +66,7 @@ class Game:
                 self.sound.play(0, self.config.SOUND['shot'], 1.0)
 
     def process(self):
-
+        
         bombs = ["bomb1", "bomb2", "bomb3", "bomb4"]
         now = pygame.time.get_ticks()
         bomb_hits = random.randint(0, 3)
@@ -145,6 +145,8 @@ class Game:
 
     def loop(self):
         pygame.init()
+        if self.life.value > 0:
+            self.sound.music(self.config.MUSIC['music_loop'])
         clock = pygame.time.Clock()
         while self.is_running:
             self.input()

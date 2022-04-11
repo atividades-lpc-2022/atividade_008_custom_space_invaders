@@ -1,4 +1,5 @@
-from src.config import Config
+import pygame
+
 from src.game import Game
 
 
