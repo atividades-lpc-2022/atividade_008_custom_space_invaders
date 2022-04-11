@@ -1,6 +1,6 @@
 class Config:
     TITLE = (
-        "Custom Space Invaders - Gabriel Da Silva, Gabriel Dos Santos e Melinne Diniz"
+        "Imminent Doomsday - Gabriel Da Silva, Gabriel Dos Santos e Melinne Diniz"
     )
     SCREEN_WIDTH = 800  # TODO: Define screen size
     SCREEN_HEIGHT = 600  # TODO: Define screen size
@@ -11,6 +11,7 @@ class Config:
     COLORS = {"white": (255, 255, 255)}
 
     IMAGE = {
+        "icon": "src/img/icon.png",
         "tank": "src/img/tank2.png",
         "aim": "src/img/sight2.png",
         "bg": "src/img/background.png",
@@ -34,5 +35,6 @@ class Config:
         "explosion_air": "src/sound/explode_air.ogg",
         "explosion": "src/sound/explode_floor.ogg",
         "shot": "src/sound/shot.ogg", 
-        "game_over": "src/sound/GameOver.ogg"
+        "game_over": "src/sound/GameOver.ogg",
+        "music_loop": "src/sound/pika-a-boo_8bit.mp3"
         }

@@ -18,14 +18,14 @@ from modules.Sound import Sound
 
 
 class Game:
-    pygame.display.set_icon(pygame.image.load('src\img\icon.png'))
+    
     
     def __init__(self, config: Config):
         self.config = config
         self.screen = Screen(
             config.TITLE,
             Dimension(config.SCREEN_WIDTH, config.SCREEN_HEIGHT),
-            self.config.IMAGE["bg"],
+            self.config.IMAGE["bg"], self.config.IMAGE["icon"]
         )
         self.tank = Tank(
             Coordinate(400, 515), Dimension(59, 63), self.config.IMAGE["tank"]
@@ -66,6 +66,7 @@ class Game:
                 self.sound.play(0, self.config.SOUND['shot'], 1.0)
 
     def process(self):
+
         bombs = ["bomb1", "bomb2", "bomb3", "bomb4"]
         now = pygame.time.get_ticks()
         bomb_hits = random.randint(0, 3)
@@ -128,6 +129,7 @@ class Game:
                 or bullet.coordinate.y > self.screen.dimension.height
             ):
                 self.bullets.remove(bullet)
+
 
     def draw(self):
         self.screen.draw()

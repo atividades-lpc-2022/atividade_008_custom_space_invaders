@@ -23,8 +23,8 @@ class Bullet(Element):
         self.angle = angle
         self.image = pygame.image.load(image_path)
         self.euclidean = math.hypot(direct[0], direct[1])
-        if self.euclidean == 0:
-            self.dir = (-5, 0)
+        if self.euclidean == 0.0:
+            self.dir = (0, 0)
         else:
             self.dir = (direct[0] / self.euclidean, direct[1] / self.euclidean)
         self.image = pygame.transform.rotate(self.image, self.angle)
