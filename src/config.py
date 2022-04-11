@@ -1,3 +1,6 @@
+import json
+
+
 class Config:
     TITLE = (
         "Custom Space Invaders - Gabriel Da Silva, Gabriel Dos Santos e Melinne Diniz"
@@ -7,6 +10,7 @@ class Config:
     POINTS = 1
 
     FONT_FAMILY = "src/fonts/PressStart2P.ttf"
+    LOCAL_DATA_PATH = "src/local_data.json"
 
     COLORS = {"white": (255, 255, 255)}
 
@@ -35,4 +39,22 @@ class Config:
         "explosion": "src/sound/explode_floor.ogg",
         "shot": "src/sound/shot.ogg", 
         "game_over": "src/sound/GameOver.ogg"
-        }
+    }
+
+    def __get_local_data__(self) -> dict:
+        with open(self.LOCAL_DATA_PATH, 'r') as local_data_file:
+            local_data = json.load(local_data_file)
+        return local_data
+
+    def get_high_score(self) -> int:
+        local_data = self.__get_local_data__()
+        return local_data['high_score']
+
+    def set_high_score(self, new_high_score: int):
+        local_data = self.__get_local_data__()
+        local_data['high_score'] = new_high_score
+        
+        new_local_data = json.dumps(local_data, indent = 4)
+        
+        with open(self.LOCAL_DATA_PATH, 'w') as local_data_file:
+            local_data_file.write(new_local_data)
