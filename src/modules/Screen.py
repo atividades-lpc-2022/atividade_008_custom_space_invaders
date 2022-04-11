@@ -10,5 +10,8 @@ class Screen:
         pygame.display.set_caption(title)
         pygame.display.set_icon(pygame.image.load(icon))
 
+    def change_background(self, new_image_path: str):
+        self.image_path = new_image_path
+
     def draw(self):
         self.surface.blit(pygame.image.load(self.image_path), (0, 0))

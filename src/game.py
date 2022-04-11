@@ -17,13 +17,14 @@ from src.modules.Bullet import Bullet
 from src.modules.Sound import Sound
 
 
+
 class Game:
     def __init__(self, config: Config):
         self.config = config
         self.screen = Screen(
             config.TITLE,
             Dimension(config.SCREEN_WIDTH, config.SCREEN_HEIGHT),
-            self.config.IMAGE["bg"],
+            self.config.IMAGE["home"],
             self.config.IMAGE["icon"],
         )
         self.tank = Tank(
@@ -62,8 +63,9 @@ class Game:
             self.config.FONT_FAMILY,
             32,
             Coordinate(self.config.SCREEN_WIDTH * 0.5, self.config.SCREEN_HEIGHT * 0.6),
+            (217, 212, 82)
         )
-        self.scene = self.config.SCENE["gameover"]
+        self.scene = self.config.SCENE["home"]
         self.is_running = True
         self.sound = Sound()
         self.last_tick = pygame.time.get_ticks()
@@ -77,6 +79,7 @@ class Game:
         self.life.reset()
         self.bricks = []
         self.bullets = []
+        self.screen.change_background(self.config.IMAGE["home"])
 
     def input(self):
         for event in pygame.event.get():
@@ -92,12 +95,21 @@ class Game:
                 self.sound.play(0, self.config.SOUND["shot"], 1.0)
             if (
                 self.scene == self.config.SCENE["gameover"]
-                and event.type == pygame.K_SPACE
+                and event.type == pygame.KEYDOWN
+                and event.key == pygame.K_SPACE
             ):
                 self.__reset__()
-                self.scene = self.config.SCENE["game"]
+                self.scene = self.config.SCENE["home"]
 
     def process(self):
+        if self.life.value <= 0:
+            if self.config.get_high_score() < self.score.value:
+                self.config.set_high_score(self.score.value)
+            self.screen.change_background(self.config.IMAGE["gameover"])
+            self.hud = HUD()
+            self.final_score.value = self.score.value
+            self.scene = self.config.SCENE["gameover"]
+
         if self.scene == self.config.SCENE["game"]:
             bombs = ["bomb1", "bomb2", "bomb3", "bomb4"]
             now = pygame.time.get_ticks()
@@ -158,18 +170,6 @@ class Game:
                 ):
                     self.bullets.remove(bullet)
 
-            if self.life.value <= 0:
-                if self.config.get_high_score() < self.score.value:
-                    self.config.set_high_score(self.score.value)
-                self.screen = Screen(
-                    "Gameover",
-                    Dimension(self.config.SCREEN_WIDTH, self.config.SCREEN_HEIGHT),
-                    self.config.IMAGE["gameover"],
-                    self.config.IMAGE["icon"],
-                )
-                self.hud = HUD(Dimension(self.config.SCREEN_WIDTH, 50))
-                self.scene = self.config.SCENE["gameover"]
-
     def draw(self):
         if self.scene == self.config.SCENE["game"]:
             self.screen.draw()
@@ -188,6 +188,7 @@ class Game:
 
     def loop(self):
         pygame.init()
+        if self.life.value > 0: self.sound.music(self.config.MUSIC['music_loop'])
         clock = pygame.time.Clock()
         while self.is_running:
             self.input()

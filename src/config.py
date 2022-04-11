@@ -42,7 +42,15 @@ class Config:
         "game_over": "src/sound/GameOver.ogg",
     }
 
-    SCENE = {"home": 1, "game": 2, "gameover": 3}
+    SCENE = {
+        "home": 1, 
+        "game": 2, 
+        "gameover": 3
+    } 
+
+    MUSIC = {
+        "music_loop": "src/sound/wargames_defcon_track5.ogg",
+    }
 
     def __get_local_data__(self) -> dict:
         with open(self.LOCAL_DATA_PATH, "r") as local_data_file:
