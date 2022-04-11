@@ -13,11 +13,12 @@ class Config:
     COLORS = {"white": (255, 255, 255)}
 
     IMAGE = {
+        "bg": "src/img/background.png",
+        "gameover": "src/img/endgame.png",
+        "home": "src/img/home_screen.png",
         "icon": "src/img/icon.png",
         "tank": "src/img/tank2.png",
         "aim": "src/img/sight2.png",
-        "bg": "src/img/background.png",
-        "gameover": "src/img/endgame.png",
         "shot": "src/img/shot2.png",
         "bomb1": "src/img/bomb1.png",
         "bomb2": "src/img/bomb2.png",
@@ -49,7 +50,8 @@ class Config:
     } 
 
     MUSIC = {
-        "music_loop": "src/sound/wargames_defcon_track5.ogg",
+        "game": "src/sound/wargames_defcon_track5.ogg",
+        "home": "src/sound/rabbia_e_tarantella.ogg"
     }
 
     def __get_local_data__(self) -> dict:

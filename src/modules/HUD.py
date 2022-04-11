@@ -1,5 +1,3 @@
-from src.modules.Coordinate import Coordinate
-from src.modules.Dimension import Dimension
 from src.modules.HUDElement import HUDElement
 from src.modules.Screen import Screen
 

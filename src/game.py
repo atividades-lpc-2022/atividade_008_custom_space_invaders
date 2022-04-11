@@ -82,13 +82,22 @@ class Game:
         self.screen.change_background(self.config.IMAGE["home"])
 
     def input(self):
+        mouse = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.__stop__()
             if (
+                self.scene == self.config.SCENE["home"]
+                and event.type == pygame.MOUSEBUTTONDOWN
+                and (776, 188) > mouse > (595, 127)
+            ):
+                self.scene = self.config.SCENE["game"]
+                self.screen.change_background(self.config.IMAGE["bg"])
+                self.sound.music(self.config.MUSIC["game"])
+            if (
                 self.scene == self.config.SCENE["game"]
                 and event.type == pygame.MOUSEBUTTONDOWN
-                and len(self.bullets) < 4
+                and len(self.bullets) <= 4
             ):
                 bullet = self.tank.fire(Speed(6, 6), self.config.IMAGE["shot"])
                 self.bullets.append(bullet)
@@ -102,7 +111,9 @@ class Game:
                 self.scene = self.config.SCENE["home"]
 
     def process(self):
+
         if self.life.value <= 0:
+            self.sound.stop_music()
             if self.config.get_high_score() < self.score.value:
                 self.config.set_high_score(self.score.value)
             self.screen.change_background(self.config.IMAGE["gameover"])
@@ -118,7 +129,7 @@ class Game:
             if now - self.last_tick >= self.cooldown:
                 self.last_tick = now
                 brick = Brick(
-                    Coordinate(random.randint(20, Config.SCREEN_WIDTH - 20), 0),
+                    Coordinate(random.randint(40, Config.SCREEN_WIDTH - 30), 0),
                     Dimension(16, 32),
                     Config.IMAGE[bombs[bomb_hits]],
                     Speed(0, 0.5 + (0.01 * self.score.value) - (0.1 * bomb_hits)),
@@ -171,6 +182,15 @@ class Game:
                     self.bullets.remove(bullet)
 
     def draw(self):
+        if self.scene == self.config.SCENE['home']:
+            self.screen.draw()
+            font_b = pygame.font.Font(self.config.FONT_FAMILY, 20)
+            button = font_b.render(
+            'START', True, pygame.Color(0, 0, 0)
+            )
+            button_rect = button.get_rect()
+            button_rect.center = (687, 152)
+            self.screen.surface.blit(button, button_rect)
         if self.scene == self.config.SCENE["game"]:
             self.screen.draw()
             self.hud.draw(self.screen, [self.score, self.life])
@@ -188,8 +208,9 @@ class Game:
 
     def loop(self):
         pygame.init()
-        if self.life.value > 0: self.sound.music(self.config.MUSIC['music_loop'])
         clock = pygame.time.Clock()
+        if self.scene != "game":
+            self.sound.music(self.config.MUSIC["home"])
         while self.is_running:
             self.input()
             self.process()

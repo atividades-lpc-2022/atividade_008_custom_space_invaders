@@ -20,3 +20,6 @@ class Sound:
     def music(self, music: str):
         mixer.music.load(music)
         mixer.music.play(-1)
+    
+    def stop_music(self):
+        mixer.music.stop()
